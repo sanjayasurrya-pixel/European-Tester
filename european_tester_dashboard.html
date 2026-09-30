@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>European Tester - Main Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cream-bright': '#FFF8EE',
+                        'cream-soft': '#FFE0B2',
+                        'cream-warm': '#D3A376',
+                        'brown-dark': '#3E2522',
+                        'brown-border': '#5C3D2E',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="w-full min-h-screen bg-[#0d0705] text-[#FFF8EE] relative overflow-x-hidden font-sans antialiased">
+
+    <!-- Background Gambar Fullscreen -->
+    <div class="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-100 pointer-events-none z-0" 
+         style="background-image: url('bg login3.jpeg');"></div>
+
+    <!-- Dark Overlay Glassmorphism -->
+    <div class="fixed inset-0 w-full h-full bg-black/60 backdrop-blur-md pointer-events-none z-0"></div>
+
+    <!-- Toast Notification Copy -->
+    <div id="copyToast" class="fixed bottom-5 right-5 z-50 hidden bg-[#1a0f0b] text-[#FFE0B2] border border-[#FFE0B2]/40 px-4 py-2.5 rounded-xl text-xs shadow-2xl backdrop-blur-md flex items-center space-x-2 transition-all">
+        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span>Link berhasil disalin!</span>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="relative z-10 min-h-screen flex flex-col">
+
+        <!-- NAVBAR HEADER -->
+        <header class="sticky top-0 z-40 w-full">
+            <nav class="w-full flex items-center justify-between px-4 sm:px-6 py-3 bg-[#1a0f0b]/40 backdrop-blur-xl border-b border-[#FFE0B2]/20 shadow-lg">
+                <a href="#" class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-[#D3A376] to-[#FFE0B2] flex items-center justify-center text-[#3E2522] font-black text-xs sm:text-sm shadow-md">
+                        ET
+                    </div>
+                    <span class="text-base sm:text-lg font-bold tracking-wide text-[#FFF8EE]">
+                        European Tester
+                    </span>
+                </a>
+
+                <!-- Profile Dropdown -->
+                <div class="relative">
+                    <button type="button" id="userMenuBtn" class="flex items-center space-x-2 sm:space-x-3 bg-[#FFF8EE]/10 hover:bg-[#FFF8EE]/20 border border-[#FFE0B2]/30 pl-1.5 pr-3 py-1.5 rounded-full backdrop-blur-md transition-all cursor-pointer">
+                        <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gradient-to-tr from-[#D3A376] to-[#FFE0B2] text-[#3E2522] flex items-center justify-center font-bold text-xs">
+                            A
+                        </div>
+                        <span class="text-xs font-semibold text-[#FFF8EE] hidden xs:inline">Alex Tester</span>
+                    </button>
+
+                    <div id="userDropdown" class="hidden absolute right-0 mt-2 w-64 sm:w-72 rounded-2xl bg-[#1a0f0b]/95 backdrop-blur-2xl border border-[#FFE0B2]/30 shadow-2xl overflow-hidden text-xs z-50">
+                        <div class="bg-[#FFF8EE]/5 p-4 flex flex-col items-center justify-center text-center border-b border-[#FFE0B2]/15">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-[#D3A376] to-[#FFE0B2] text-[#3E2522] flex items-center justify-center font-black text-lg sm:text-xl mb-2">
+                                A
+                            </div>
+                            <h4 class="text-sm font-bold text-[#FFF8EE]">Alex Tester</h4>
+                            <p class="text-[11px] text-[#FFE0B2]/70">alex@gmail.com</p>
+                        </div>
+                        <div class="py-2">
+                            <a href="#" class="block px-4 py-2 hover:bg-[#FFF8EE]/10 transition">Passwords and autofill</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-[#FFF8EE]/10 transition">Manage your Account</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-[#FFF8EE]/10 transition">Customize profile</a>
+                        </div>
+                        <div class="border-t border-[#FFE0B2]/15 py-2">
+                            <a href="login.html" class="block px-4 py-2 text-red-400 hover:bg-red-500/10 transition">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- DASHBOARD CONTENT -->
+        <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-8 space-y-6 sm:space-y-8">
+            
+            <!-- STATS CARDS -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                <div class="p-3.5 sm:p-5 rounded-2xl bg-[#FFF8EE]/10 backdrop-blur-xl border border-[#FFE0B2]/30 shadow-lg flex flex-col justify-between">
+                    <span class="text-[10px] sm:text-xs font-medium text-[#FFE0B2]/70 uppercase tracking-wider">Total Situs</span>
+                    <span class="text-2xl sm:text-3xl font-extrabold text-[#FFF8EE] mt-1 sm:mt-2">12</span>
+                </div>
+                <div class="p-3.5 sm:p-5 rounded-2xl bg-[#FFF8EE]/10 backdrop-blur-xl border border-[#FFE0B2]/30 shadow-lg flex flex-col justify-between">
+                    <span class="text-[10px] sm:text-xs font-medium text-[#FFE0B2]/70 uppercase tracking-wider">Belum Dicek</span>
+                    <span class="text-2xl sm:text-3xl font-extrabold text-[#FFF8EE] mt-1 sm:mt-2">3</span>
+                </div>
+                <div class="p-3.5 sm:p-5 rounded-2xl bg-[#FFF8EE]/10 backdrop-blur-xl border border-[#FFE0B2]/30 shadow-lg flex flex-col justify-between">
+                    <span class="text-[10px] sm:text-xs font-medium text-[#FFE0B2]/70 uppercase tracking-wider">Berhasil</span>
+                    <span class="text-2xl sm:text-3xl font-extrabold text-[#FFF8EE] mt-1 sm:mt-2">7</span>
+                </div>
+                <div class="p-3.5 sm:p-5 rounded-2xl bg-[#FFF8EE]/10 backdrop-blur-xl border border-[#FFE0B2]/30 shadow-lg flex flex-col justify-between">
+                    <span class="text-[10px] sm:text-xs font-medium text-[#FFE0B2]/70 uppercase tracking-wider">Gagal</span>
+                    <span class="text-2xl sm:text-3xl font-extrabold text-[#FFF8EE] mt-1 sm:mt-2">2</span>
+                </div>
+            </div>
+
+            <!-- TABLE CONTAINER -->
+            <div class="rounded-2xl sm:rounded-3xl bg-[#FFF8EE]/10 backdrop-blur-xl border border-[#FFE0B2]/30 shadow-2xl p-4 sm:p-6 space-y-4 sm:space-y-6">
+                
+                <!-- Controls Filter & Search -->
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
+                    <h2 class="text-lg sm:text-xl font-bold text-[#FFF8EE] tracking-wide">Daftar Pengujian Situs</h2>
+                    
+                    <div class="flex flex-col sm:flex-row items-center gap-2.5 w-full lg:w-auto flex-wrap">
+                        
+                        <!-- 1. Tombol Reset Filter (Paling Kiri) -->
+                        <button type="button" id="resetFilterBtn" onclick="resetAllFilters()" class="w-full sm:w-auto px-4 py-2 text-xs font-semibold rounded-full bg-gradient-to-r from-[#D3A376] to-[#FFE0B2] text-[#3E2522] hover:brightness-110 transition cursor-pointer flex items-center justify-center space-x-1.5">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                            <span>Reset</span>
+                        </button>
+
+                        <!-- 2. Filter Tanggal (Tengah) -->
+                        <input type="date" id="dateFilter" class="w-full sm:w-auto pl-4 pr-3.5 py-2 text-xs rounded-full bg-[#1a0f0b]/80 border border-[#FFE0B2]/30 text-[#FFF8EE] focus:outline-none focus:border-[#FFE0B2] cursor-pointer [color-scheme:dark]" title="Filter Berdasarkan Tanggal">
+
+                        <!-- 3. Filter Status (Kanan setelah tanggal) -->
+                        <select id="statusFilter" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot; stroke=&quot;%23FFE0B2&quot; stroke-width=&quot;2.5&quot;><path stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; d=&quot;M19 9l-7 7-7-7&quot;/></svg>'); background-repeat: no-repeat; background-position: right 1rem center; background-size: 0.85rem 0.85rem;" class="w-full sm:w-auto appearance-none pl-4 pr-10 py-2 text-xs rounded-full bg-[#1a0f0b]/80 border border-[#FFE0B2]/30 text-[#FFF8EE] focus:outline-none focus:border-[#FFE0B2] cursor-pointer">
+                            <option value="Semua" class="bg-[#1a0f0b] text-[#FFF8EE]">Semua Status</option>
+                            <option value="Berhasil" class="bg-[#1a0f0b] text-[#FFF8EE]">Berhasil</option>
+                            <option value="Belum Dicek" class="bg-[#1a0f0b] text-[#FFF8EE]">Belum Dicek</option>
+                            <option value="Gagal" class="bg-[#1a0f0b] text-[#FFF8EE]">Gagal</option>
+                        </select>
+
+                        <!-- 4. Input Search (Paling Kanan) -->
+                        <input type="text" id="searchInput" placeholder="Cari situs atau tester..." class="w-full sm:w-48 lg:w-56 px-4 py-2 text-xs rounded-full bg-[#1a0f0b]/60 border border-[#FFE0B2]/30 text-[#FFF8EE] placeholder-[#FFE0B2]/50 focus:outline-none focus:border-[#FFE0B2]">
+
+                    </div>
+                </div>
+
+                <!-- TABLES DIPISAH BERDASARKAN BULAN -->
+                <div class="space-y-8">
+                    
+                    <!-- ================= KELOMPOK BULAN: SEPTEMBER 2026 (6 Data) ================= -->
+                    <div class="month-group space-y-3">
+                        <div class="flex items-center space-x-3 border-b border-[#FFE0B2]/30 pb-2">
+                            <span class="w-3 h-3 rounded-full bg-[#FFE0B2]"></span>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-[#FFE0B2]">September 2026</h3>
+                        </div>
+
+                        <!-- Desktop Table September -->
+                        <div class="hidden md:block overflow-x-auto">
+                            <table class="w-full text-left text-xs text-[#FFF8EE]">
+                                <thead class="bg-[#FFF8EE]/10 text-[#FFE0B2] border-b border-[#FFE0B2]/20 uppercase tracking-wider">
+                                    <tr>
+                                        <th class="p-3.5 text-center w-12">No.</th>
+                                        <th class="p-3.5">Nama Situs</th>
+                                        <th class="p-3.5">URL</th>
+                                        <th class="p-3.5 text-center">Status</th>
+                                        <th class="p-3.5">Nama Tester</th>
+                                        <th class="p-3.5 text-center">Tanggal</th>
+                                        <th class="p-3.5 text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-[#FFE0B2]/15">
+                                    
+                                    <!-- Data 1 (Hari Ini) -->
+                                    <tr class="table-row hover:bg-[#FFF8EE]/10 transition" data-status="Belum Dicek" data-date="2026-09-30">
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/70 font-mono">1</td>
+                                        <td class="p-3.5 font-semibold">Cloud Storage European Hub</td>
+                                        <td class="p-3.5">
+                                            <div class="flex items-center space-x-2">
+                                                <a href="https://drive.europeantester.com" target="_blank" class="text-[#FFE0B2] hover:underline truncate max-w-xs">https://drive.europeantester.com</a>
+                                                <button type="button" onclick="copyToClipboard('https://drive.europeantester.com', this)" class="p-1 rounded bg-[#FFF8EE]/10 hover:bg-[#FFE0B2] hover:text-[#3E2522] text-[#FFE0B2] transition">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="p-3.5 text-center font-bold text-amber-300">Belum Dicek</td>
+                                        <td class="p-3.5">Sanjaya</td>
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/80 font-mono">2026-09-30</td>
+                                        <td class="p-3.5 text-center">
+                                            <button type="button" onclick="openInputModal('Cloud Storage European Hub', 'Sanjaya', 'Belum Dicek', 'Jadwal pengujian sistem penyimpanan cloud hari ini.')" class="px-3.5 py-1.5 text-xs font-semibold rounded-full bg-[#FFF8EE]/10 hover:bg-[#FFF8EE]/20 border border-[#5C3D2E] text-[#FFF8EE] backdrop-blur-md transition cursor-pointer">Input Hasil</button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Data 2 -->
+                                    <tr class="table-row hover:bg-[#FFF8EE]/10 transition" data-status="Belum Dicek" data-date="2026-09-29">
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/70 font-mono">2</td>
+                                        <td class="p-3.5 font-semibold">Portal Testing QA</td>
+                                        <td class="p-3.5">
+                                            <div class="flex items-center space-x-2">
+                                                <a href="https://qa.europeantester.com" target="_blank" class="text-[#FFE0B2] hover:underline truncate max-w-xs">https://qa.europeantester.com</a>
+                                                <button type="button" onclick="copyToClipboard('https://qa.europeantester.com', this)" class="p-1 rounded bg-[#FFF8EE]/10 hover:bg-[#FFE0B2] hover:text-[#3E2522] text-[#FFE0B2] transition">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="p-3.5 text-center font-bold text-amber-300">Belum Dicek</td>
+                                        <td class="p-3.5">Sanjaya</td>
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/80 font-mono">2026-09-29</td>
+                                        <td class="p-3.5 text-center">
+                                            <button type="button" onclick="openInputModal('Portal Testing QA', 'Sanjaya', 'Belum Dicek', 'Menunggu giliran pengujian otomatis.')" class="px-3.5 py-1.5 text-xs font-semibold rounded-full bg-[#FFF8EE]/10 hover:bg-[#FFF8EE]/20 border border-[#5C3D2E] text-[#FFF8EE] backdrop-blur-md transition cursor-pointer">Input Hasil</button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Data 3 -->
+                                    <tr class="table-row hover:bg-[#FFF8EE]/10 transition" data-status="Berhasil" data-date="2026-09-28">
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/70 font-mono">3</td>
+                                        <td class="p-3.5 font-semibold">E-Commerce Europe</td>
+                                        <td class="p-3.5">
+                                            <div class="flex items-center space-x-2">
+                                                <a href="https://shop.europeantester.com" target="_blank" class="text-[#FFE0B2] hover:underline truncate max-w-xs">https://shop.europeantester.com</a>
+                                                <button type="button" onclick="copyToClipboard('https://shop.europeantester.com', this)" class="p-1 rounded bg-[#FFF8EE]/10 hover:bg-[#FFE0B2] hover:text-[#3E2522] text-[#FFE0B2] transition">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="p-3.5 text-center font-bold text-emerald-400">Berhasil</td>
+                                        <td class="p-3.5">Alex Tester</td>
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/80 font-mono">2026-09-28</td>
+                                        <td class="p-3.5 text-center">
+                                            <button type="button" onclick="openInputModal('E-Commerce Europe', 'Alex Tester', 'Berhasil', 'Pengujian modul pembayaran selesai tanpa kendala.')" class="px-3.5 py-1.5 text-xs font-semibold rounded-full bg-[#FFF8EE]/10 hover:bg-[#FFF8EE]/20 border border-[#5C3D2E] text-[#FFF8EE] backdrop-blur-md transition cursor-pointer">Input Hasil</button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Data 4 -->
+                                    <tr class="table-row hover:bg-[#FFF8EE]/10 transition" data-status="Gagal" data-date="2026-09-27">
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/70 font-mono">4</td>
+                                        <td class="p-3.5 font-semibold">Bank Payment Gateway</td>
+                                        <td class="p-3.5">
+                                            <div class="flex items-center space-x-2">
+                                                <a href="https://pay.europeantester.com" target="_blank" class="text-[#FFE0B2] hover:underline truncate max-w-xs">https://pay.europeantester.com</a>
+                                                <button type="button" onclick="copyToClipboard('https://pay.europeantester.com', this)" class="p-1 rounded bg-[#FFF8EE]/10 hover:bg-[#FFE0B2] hover:text-[#3E2522] text-[#FFE0B2] transition">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="p-3.5 text-center font-bold text-rose-400">Gagal</td>
+                                        <td class="p-3.5">Alex Tester</td>
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/80 font-mono">2026-09-27</td>
+                                        <td class="p-3.5 text-center">
+                                            <button type="button" onclick="openInputModal('Bank Payment Gateway', 'Alex Tester', 'Gagal', 'Terjadi error 500 saat transaksi SSL.')" class="px-3.5 py-1.5 text-xs font-semibold rounded-full bg-[#FFF8EE]/10 hover:bg-[#FFF8EE]/20 border border-[#5C3D2E] text-[#FFF8EE] backdrop-blur-md transition cursor-pointer">Input Hasil</button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Data 5 -->
+                                    <tr class="table-row hover:bg-[#FFF8EE]/10 transition" data-status="Berhasil" data-date="2026-09-20">
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/70 font-mono">5</td>
+                                        <td class="p-3.5 font-semibold">Euro Train Ticketing</td>
+                                        <td class="p-3.5">
+                                            <div class="flex items-center space-x-2">
+                                                <a href="https://tickets.eurorail-test.eu" target="_blank" class="text-[#FFE0B2] hover:underline truncate max-w-xs">https://tickets.eurorail-test.eu</a>
+                                                <button type="button" onclick="copyToClipboard('https://tickets.eurorail-test.eu', this)" class="p-1 rounded bg-[#FFF8EE]/10 hover:bg-[#FFE0B2] hover:text-[#3E2522] text-[#FFE0B2] transition">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="p-3.5 text-center font-bold text-emerald-400">Berhasil</td>
+                                        <td class="p-3.5">Sanjaya</td>
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/80 font-mono">2026-09-20</td>
+                                        <td class="p-3.5 text-center">
+                                            <button type="button" onclick="openInputModal('Euro Train Ticketing', 'Sanjaya', 'Berhasil', 'Pemesanan tiket kereta cepat berjalan mulus.')" class="px-3.5 py-1.5 text-xs font-semibold rounded-full bg-[#FFF8EE]/10 hover:bg-[#FFF8EE]/20 border border-[#5C3D2E] text-[#FFF8EE] backdrop-blur-md transition cursor-pointer">Input Hasil</button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Data 6 -->
+                                    <tr class="table-row hover:bg-[#FFF8EE]/10 transition" data-status="Gagal" data-date="2026-09-12">
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/70 font-mono">6</td>
+                                        <td class="p-3.5 font-semibold">Logistics & Tracking API</td>
+                                        <td class="p-3.5">
+                                            <div class="flex items-center space-x-2">
+                                                <a href="https://track.eu-logistics.com" target="_blank" class="text-[#FFE0B2] hover:underline truncate max-w-xs">https://track.eu-logistics.com</a>
+                                                <button type="button" onclick="copyToClipboard('https://track.eu-logistics.com', this)" class="p-1 rounded bg-[#FFF8EE]/10 hover:bg-[#FFE0B2] hover:text-[#3E2522] text-[#FFE0B2] transition">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="p-3.5 text-center font-bold text-rose-400">Gagal</td>
+                                        <td class="p-3.5">Alex Tester</td>
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/80 font-mono">2026-09-12</td>
+                                        <td class="p-3.5 text-center">
+                                            <button type="button" onclick="openInputModal('Logistics & Tracking API', 'Alex Tester', 'Gagal', 'API endpoint kargo tidak merespon (timeout).')" class="px-3.5 py-1.5 text-xs font-semibold rounded-full bg-[#FFF8EE]/10 hover:bg-[#FFF8EE]/20 border border-[#5C3D2E] text-[#FFF8EE] backdrop-blur-md transition cursor-pointer">Input Hasil</button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Mobile Cards September -->
+                        <div class="block md:hidden space-y-3">
+                            <div class="mobile-card p-4 rounded-2xl bg-[#1a0f0b]/70 border border-[#FFE0B2]/20 space-y-3" data-status="Belum Dicek" data-date="2026-09-30">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-bold text-sm text-[#FFF8EE]">Cloud Storage European Hub</h3>
+                                    <span class="text-xs font-bold text-amber-300">Belum Dicek</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs pt-1 border-t border-[#FFE0B2]/10">
+                                    <span class="text-[#FFE0B2]/70 font-mono">Tgl: 2026-09-30</span>
+                                    <button type="button" onclick="openInputModal('Cloud Storage European Hub', 'Sanjaya', 'Belum Dicek', 'Jadwal pengujian sistem penyimpanan cloud hari ini.')" class="px-3 py-1 text-[11px] font-semibold rounded-full bg-[#FFF8EE]/10 border border-[#5C3D2E]">Input Hasil</button>
+                                </div>
+                            </div>
+
+                            <div class="mobile-card p-4 rounded-2xl bg-[#1a0f0b]/70 border border-[#FFE0B2]/20 space-y-3" data-status="Belum Dicek" data-date="2026-09-29">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-bold text-sm text-[#FFF8EE]">Portal Testing QA</h3>
+                                    <span class="text-xs font-bold text-amber-300">Belum Dicek</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs pt-1 border-t border-[#FFE0B2]/10">
+                                    <span class="text-[#FFE0B2]/70 font-mono">Tgl: 2026-09-29</span>
+                                    <button type="button" onclick="openInputModal('Portal Testing QA', 'Sanjaya', 'Belum Dicek', 'Menunggu giliran pengujian otomatis.')" class="px-3 py-1 text-[11px] font-semibold rounded-full bg-[#FFF8EE]/10 border border-[#5C3D2E]">Input Hasil</button>
+                                </div>
+                            </div>
+
+                            <div class="mobile-card p-4 rounded-2xl bg-[#1a0f0b]/70 border border-[#FFE0B2]/20 space-y-3" data-status="Berhasil" data-date="2026-09-28">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-bold text-sm text-[#FFF8EE]">E-Commerce Europe</h3>
+                                    <span class="text-xs font-bold text-emerald-400">Berhasil</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs pt-1 border-t border-[#FFE0B2]/10">
+                                    <span class="text-[#FFE0B2]/70 font-mono">Tgl: 2026-09-28</span>
+                                    <button type="button" onclick="openInputModal('E-Commerce Europe', 'Alex Tester', 'Berhasil', 'Pengujian modul pembayaran selesai tanpa kendala.')" class="px-3 py-1 text-[11px] font-semibold rounded-full bg-[#FFF8EE]/10 border border-[#5C3D2E]">Input Hasil</button>
+                                </div>
+                            </div>
+
+                            <div class="mobile-card p-4 rounded-2xl bg-[#1a0f0b]/70 border border-[#FFE0B2]/20 space-y-3" data-status="Gagal" data-date="2026-09-27">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-bold text-sm text-[#FFF8EE]">Bank Payment Gateway</h3>
+                                    <span class="text-xs font-bold text-rose-400">Gagal</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs pt-1 border-t border-[#FFE0B2]/10">
+                                    <span class="text-[#FFE0B2]/70 font-mono">Tgl: 2026-09-27</span>
+                                    <button type="button" onclick="openInputModal('Bank Payment Gateway', 'Alex Tester', 'Gagal', 'Terjadi error 500 saat transaksi SSL.')" class="px-3 py-1 text-[11px] font-semibold rounded-full bg-[#FFF8EE]/10 border border-[#5C3D2E]">Input Hasil</button>
+                                </div>
+                            </div>
+
+                            <div class="mobile-card p-4 rounded-2xl bg-[#1a0f0b]/70 border border-[#FFE0B2]/20 space-y-3" data-status="Berhasil" data-date="2026-09-20">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-bold text-sm text-[#FFF8EE]">Euro Train Ticketing</h3>
+                                    <span class="text-xs font-bold text-emerald-400">Berhasil</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs pt-1 border-t border-[#FFE0B2]/10">
+                                    <span class="text-[#FFE0B2]/70 font-mono">Tgl: 2026-09-20</span>
+                                    <button type="button" onclick="openInputModal('Euro Train Ticketing', 'Sanjaya', 'Berhasil', 'Pemesanan tiket kereta cepat berjalan mulus.')" class="px-3 py-1 text-[11px] font-semibold rounded-full bg-[#FFF8EE]/10 border border-[#5C3D2E]">Input Hasil</button>
+                                </div>
+                            </div>
+
+                            <div class="mobile-card p-4 rounded-2xl bg-[#1a0f0b]/70 border border-[#FFE0B2]/20 space-y-3" data-status="Gagal" data-date="2026-09-12">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-bold text-sm text-[#FFF8EE]">Logistics & Tracking API</h3>
+                                    <span class="text-xs font-bold text-rose-400">Gagal</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs pt-1 border-t border-[#FFE0B2]/10">
+                                    <span class="text-[#FFE0B2]/70 font-mono">Tgl: 2026-09-12</span>
+                                    <button type="button" onclick="openInputModal('Logistics & Tracking API', 'Alex Tester', 'Gagal', 'API endpoint kargo tidak merespon (timeout).')" class="px-3 py-1 text-[11px] font-semibold rounded-full bg-[#FFF8EE]/10 border border-[#5C3D2E]">Input Hasil</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ================= KELOMPOK BULAN: AGUSTUS 2026 (6 Data) ================= -->
+                    <div class="month-group space-y-3 pt-4">
+                        <div class="flex items-center space-x-3 border-b border-[#FFE0B2]/30 pb-2">
+                            <span class="w-3 h-3 rounded-full bg-[#FFE0B2]"></span>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-[#FFE0B2]">Agustus 2026</h3>
+                        </div>
+
+                        <!-- Desktop Table Agustus -->
+                        <div class="hidden md:block overflow-x-auto">
+                            <table class="w-full text-left text-xs text-[#FFF8EE]">
+                                <thead class="bg-[#FFF8EE]/10 text-[#FFE0B2] border-b border-[#FFE0B2]/20 uppercase tracking-wider">
+                                    <tr>
+                                        <th class="p-3.5 text-center w-12">No.</th>
+                                        <th class="p-3.5">Nama Situs</th>
+                                        <th class="p-3.5">URL</th>
+                                        <th class="p-3.5 text-center">Status</th>
+                                        <th class="p-3.5">Nama Tester</th>
+                                        <th class="p-3.5 text-center">Tanggal</th>
+                                        <th class="p-3.5 text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-[#FFE0B2]/15">
+                                    
+                                    <!-- Data 1 -->
+                                    <tr class="table-row hover:bg-[#FFF8EE]/10 transition" data-status="Berhasil" data-date="2026-08-28">
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/70 font-mono">1</td>
+                                        <td class="p-3.5 font-semibold">Spotify Web Player Clone</td>
+                                        <td class="p-3.5">
+                                            <div class="flex items-center space-x-2">
+                                                <a href="https://music.europeantester.com" target="_blank" class="text-[#FFE0B2] hover:underline truncate max-w-xs">https://music.europeantester.com</a>
+                                                <button type="button" onclick="copyToClipboard('https://music.europeantester.com', this)" class="p-1 rounded bg-[#FFF8EE]/10 hover:bg-[#FFE0B2] hover:text-[#3E2522] text-[#FFE0B2] transition">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="p-3.5 text-center font-bold text-emerald-400">Berhasil</td>
+                                        <td class="p-3.5">Sanjaya</td>
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/80 font-mono">2026-08-28</td>
+                                        <td class="p-3.5 text-center">
+                                            <button type="button" onclick="openInputModal('Spotify Web Player Clone', 'Sanjaya', 'Berhasil', 'Integrasi pemutar audio web berfungsi penuh.')" class="px-3.5 py-1.5 text-xs font-semibold rounded-full bg-[#FFF8EE]/10 hover:bg-[#FFF8EE]/20 border border-[#5C3D2E] text-[#FFF8EE] backdrop-blur-md transition cursor-pointer">Input Hasil</button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Data 2 -->
+                                    <tr class="table-row hover:bg-[#FFF8EE]/10 transition" data-status="Berhasil" data-date="2026-08-22">
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/70 font-mono">2</td>
+                                        <td class="p-3.5 font-semibold">UBIG Internship Portal</td>
+                                        <td class="p-3.5">
+                                            <div class="flex items-center space-x-2">
+                                                <a href="https://ubig.internship-test.id" target="_blank" class="text-[#FFE0B2] hover:underline truncate max-w-xs">https://ubig.internship-test.id</a>
+                                                <button type="button" onclick="copyToClipboard('https://ubig.internship-test.id', this)" class="p-1 rounded bg-[#FFF8EE]/10 hover:bg-[#FFE0B2] hover:text-[#3E2522] text-[#FFE0B2] transition">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="p-3.5 text-center font-bold text-emerald-400">Berhasil</td>
+                                        <td class="p-3.5">Sanjaya</td>
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/80 font-mono">2026-08-22</td>
+                                        <td class="p-3.5 text-center">
+                                            <button type="button" onclick="openInputModal('UBIG Internship Portal', 'Sanjaya', 'Berhasil', 'Pengujian unggah tugas magang sukses dilakukan.')" class="px-3.5 py-1.5 text-xs font-semibold rounded-full bg-[#FFF8EE]/10 hover:bg-[#FFF8EE]/20 border border-[#5C3D2E] text-[#FFF8EE] backdrop-blur-md transition cursor-pointer">Input Hasil</button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Data 3 -->
+                                    <tr class="table-row hover:bg-[#FFF8EE]/10 transition" data-status="Berhasil" data-date="2026-08-15">
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/70 font-mono">3</td>
+                                        <td class="p-3.5 font-semibold">Berlin Stream Video</td>
+                                        <td class="p-3.5">
+                                            <div class="flex items-center space-x-2">
+                                                <a href="https://stream.berlin-media.de" target="_blank" class="text-[#FFE0B2] hover:underline truncate max-w-xs">https://stream.berlin-media.de</a>
+                                                <button type="button" onclick="copyToClipboard('https://stream.berlin-media.de', this)" class="p-1 rounded bg-[#FFF8EE]/10 hover:bg-[#FFE0B2] hover:text-[#3E2522] text-[#FFE0B2] transition">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="p-3.5 text-center font-bold text-emerald-400">Berhasil</td>
+                                        <td class="p-3.5">Alex Tester</td>
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/80 font-mono">2026-08-15</td>
+                                        <td class="p-3.5 text-center">
+                                            <button type="button" onclick="openInputModal('Berlin Stream Video', 'Alex Tester', 'Berhasil', 'Playback HLS lancar tanpa buffering.')" class="px-3.5 py-1.5 text-xs font-semibold rounded-full bg-[#FFF8EE]/10 hover:bg-[#FFF8EE]/20 border border-[#5C3D2E] text-[#FFF8EE] backdrop-blur-md transition cursor-pointer">Input Hasil</button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Data 4 -->
+                                    <tr class="table-row hover:bg-[#FFF8EE]/10 transition" data-status="Berhasil" data-date="2026-08-10">
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/70 font-mono">4</td>
+                                        <td class="p-3.5 font-semibold">Amsterdam Green Energy</td>
+                                        <td class="p-3.5">
+                                            <div class="flex items-center space-x-2">
+                                                <a href="https://energy.amsterdam-test.nl" target="_blank" class="text-[#FFE0B2] hover:underline truncate max-w-xs">https://energy.amsterdam-test.nl</a>
+                                                <button type="button" onclick="copyToClipboard('https://energy.amsterdam-test.nl', this)" class="p-1 rounded bg-[#FFF8EE]/10 hover:bg-[#FFE0B2] hover:text-[#3E2522] text-[#FFE0B2] transition">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="p-3.5 text-center font-bold text-emerald-400">Berhasil</td>
+                                        <td class="p-3.5">Sanjaya</td>
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/80 font-mono">2026-08-10</td>
+                                        <td class="p-3.5 text-center">
+                                            <button type="button" onclick="openInputModal('Amsterdam Green Energy', 'Sanjaya', 'Berhasil', 'Grafik realtime terupdate presisi.')" class="px-3.5 py-1.5 text-xs font-semibold rounded-full bg-[#FFF8EE]/10 hover:bg-[#FFF8EE]/20 border border-[#5C3D2E] text-[#FFF8EE] backdrop-blur-md transition cursor-pointer">Input Hasil</button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Data 5 -->
+                                    <tr class="table-row hover:bg-[#FFF8EE]/10 transition" data-status="Gagal" data-date="2026-08-05">
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/70 font-mono">5</td>
+                                        <td class="p-3.5 font-semibold">Nordic Medical Records</td>
+                                        <td class="p-3.5">
+                                            <div class="flex items-center space-x-2">
+                                                <a href="https://health.nordic-tester.se" target="_blank" class="text-[#FFE0B2] hover:underline truncate max-w-xs">https://health.nordic-tester.se</a>
+                                                <button type="button" onclick="copyToClipboard('https://health.nordic-tester.se', this)" class="p-1 rounded bg-[#FFF8EE]/10 hover:bg-[#FFE0B2] hover:text-[#3E2522] text-[#FFE0B2] transition">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="p-3.5 text-center font-bold text-rose-400">Gagal</td>
+                                        <td class="p-3.5">Alex Tester</td>
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/80 font-mono">2026-08-05</td>
+                                        <td class="p-3.5 text-center">
+                                            <button type="button" onclick="openInputModal('Nordic Medical Records', 'Alex Tester', 'Gagal', 'Sertifikat enkripsi data medis kadaluarsa.')" class="px-3.5 py-1.5 text-xs font-semibold rounded-full bg-[#FFF8EE]/10 hover:bg-[#FFF8EE]/20 border border-[#5C3D2E] text-[#FFF8EE] backdrop-blur-md transition cursor-pointer">Input Hasil</button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Data 6 -->
+                                    <tr class="table-row hover:bg-[#FFF8EE]/10 transition" data-status="Berhasil" data-date="2026-08-01">
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/70 font-mono">6</td>
+                                        <td class="p-3.5 font-semibold">Vienna Smart City Dashboard</td>
+                                        <td class="p-3.5">
+                                            <div class="flex items-center space-x-2">
+                                                <a href="https://smart.vienna-test.at" target="_blank" class="text-[#FFE0B2] hover:underline truncate max-w-xs">https://smart.vienna-test.at</a>
+                                                <button type="button" onclick="copyToClipboard('https://smart.vienna-test.at', this)" class="p-1 rounded bg-[#FFF8EE]/10 hover:bg-[#FFE0B2] hover:text-[#3E2522] text-[#FFE0B2] transition">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="p-3.5 text-center font-bold text-emerald-400">Berhasil</td>
+                                        <td class="p-3.5">Sanjaya</td>
+                                        <td class="p-3.5 text-center text-[#FFE0B2]/80 font-mono">2026-08-01</td>
+                                        <td class="p-3.5 text-center">
+                                            <button type="button" onclick="openInputModal('Vienna Smart City Dashboard', 'Sanjaya', 'Berhasil', 'Semua widget sensor terhubung baik.')" class="px-3.5 py-1.5 text-xs font-semibold rounded-full bg-[#FFF8EE]/10 hover:bg-[#FFF8EE]/20 border border-[#5C3D2E] text-[#FFF8EE] backdrop-blur-md transition cursor-pointer">Input Hasil</button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Mobile Cards Agustus -->
+                        <div class="block md:hidden space-y-3">
+                            <div class="mobile-card p-4 rounded-2xl bg-[#1a0f0b]/70 border border-[#FFE0B2]/20 space-y-3" data-status="Berhasil" data-date="2026-08-28">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-bold text-sm text-[#FFF8EE]">Spotify Web Player Clone</h3>
+                                    <span class="text-xs font-bold text-emerald-400">Berhasil</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs pt-1 border-t border-[#FFE0B2]/10">
+                                    <span class="text-[#FFE0B2]/70 font-mono">Tgl: 2026-08-28</span>
+                                    <button type="button" onclick="openInputModal('Spotify Web Player Clone', 'Sanjaya', 'Berhasil', 'Integrasi pemutar audio web berfungsi penuh.')" class="px-3 py-1 text-[11px] font-semibold rounded-full bg-[#FFF8EE]/10 border border-[#5C3D2E]">Input Hasil</button>
+                                </div>
+                            </div>
+
+                            <div class="mobile-card p-4 rounded-2xl bg-[#1a0f0b]/70 border border-[#FFE0B2]/20 space-y-3" data-status="Berhasil" data-date="2026-08-22">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-bold text-sm text-[#FFF8EE]">UBIG Internship Portal</h3>
+                                    <span class="text-xs font-bold text-emerald-400">Berhasil</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs pt-1 border-t border-[#FFE0B2]/10">
+                                    <span class="text-[#FFE0B2]/70 font-mono">Tgl: 2026-08-22</span>
+                                    <button type="button" onclick="openInputModal('UBIG Internship Portal', 'Sanjaya', 'Berhasil', 'Pengujian unggah tugas magang sukses dilakukan.')" class="px-3 py-1 text-[11px] font-semibold rounded-full bg-[#FFF8EE]/10 border border-[#5C3D2E]">Input Hasil</button>
+                                </div>
+                            </div>
+
+                            <div class="mobile-card p-4 rounded-2xl bg-[#1a0f0b]/70 border border-[#FFE0B2]/20 space-y-3" data-status="Berhasil" data-date="2026-08-15">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-bold text-sm text-[#FFF8EE]">Berlin Stream Video</h3>
+                                    <span class="text-xs font-bold text-emerald-400">Berhasil</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs pt-1 border-t border-[#FFE0B2]/10">
+                                    <span class="text-[#FFE0B2]/70 font-mono">Tgl: 2026-08-15</span>
+                                    <button type="button" onclick="openInputModal('Berlin Stream Video', 'Alex Tester', 'Berhasil', 'Playback HLS lancar tanpa buffering.')" class="px-3 py-1 text-[11px] font-semibold rounded-full bg-[#FFF8EE]/10 border border-[#5C3D2E]">Input Hasil</button>
+                                </div>
+                            </div>
+
+                            <div class="mobile-card p-4 rounded-2xl bg-[#1a0f0b]/70 border border-[#FFE0B2]/20 space-y-3" data-status="Berhasil" data-date="2026-08-10">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-bold text-sm text-[#FFF8EE]">Amsterdam Green Energy</h3>
+                                    <span class="text-xs font-bold text-emerald-400">Berhasil</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs pt-1 border-t border-[#FFE0B2]/10">
+                                    <span class="text-[#FFE0B2]/70 font-mono">Tgl: 2026-08-10</span>
+                                    <button type="button" onclick="openInputModal('Amsterdam Green Energy', 'Sanjaya', 'Berhasil', 'Grafik realtime terupdate presisi.')" class="px-3 py-1 text-[11px] font-semibold rounded-full bg-[#FFF8EE]/10 border border-[#5C3D2E]">Input Hasil</button>
+                                </div>
+                            </div>
+
+                            <div class="mobile-card p-4 rounded-2xl bg-[#1a0f0b]/70 border border-[#FFE0B2]/20 space-y-3" data-status="Gagal" data-date="2026-08-05">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-bold text-sm text-[#FFF8EE]">Nordic Medical Records</h3>
+                                    <span class="text-xs font-bold text-rose-400">Gagal</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs pt-1 border-t border-[#FFE0B2]/10">
+                                    <span class="text-[#FFE0B2]/70 font-mono">Tgl: 2026-08-05</span>
+                                    <button type="button" onclick="openInputModal('Nordic Medical Records', 'Alex Tester', 'Gagal', 'Sertifikat enkripsi data medis kadaluarsa.')" class="px-3 py-1 text-[11px] font-semibold rounded-full bg-[#FFF8EE]/10 border border-[#5C3D2E]">Input Hasil</button>
+                                </div>
+                            </div>
+
+                            <div class="mobile-card p-4 rounded-2xl bg-[#1a0f0b]/70 border border-[#FFE0B2]/20 space-y-3" data-status="Berhasil" data-date="2026-08-01">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-bold text-sm text-[#FFF8EE]">Vienna Smart City Dashboard</h3>
+                                    <span class="text-xs font-bold text-emerald-400">Berhasil</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs pt-1 border-t border-[#FFE0B2]/10">
+                                    <span class="text-[#FFE0B2]/70 font-mono">Tgl: 2026-08-01</span>
+                                    <button type="button" onclick="openInputModal('Vienna Smart City Dashboard', 'Sanjaya', 'Berhasil', 'Semua widget sensor terhubung baik.')" class="px-3 py-1 text-[11px] font-semibold rounded-full bg-[#FFF8EE]/10 border border-[#5C3D2E]">Input Hasil</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- POP-UP MODAL INPUT HASIL PENGUJI -->
+    <div id="inputHasilModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/75 backdrop-blur-md transition-all">
+        <div class="bg-[#1a0f0b] border border-[#FFE0B2]/30 rounded-3xl p-5 sm:p-6 max-w-md w-full shadow-2xl space-y-5 relative">
+            <button type="button" onclick="closeInputModal()" class="absolute top-4 right-4 text-[#FFE0B2]/60 hover:text-white p-1 rounded-full transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            
+            <div class="border-b border-[#FFE0B2]/20 pb-3 pr-6">
+                <span class="text-[10px] text-[#FFE0B2]/60 uppercase tracking-widest font-semibold">Form Hasil Pengujian</span>
+                <h3 id="inputModalSiteTitle" class="text-base sm:text-lg font-bold text-[#FFF8EE] mt-0.5">Nama Situs</h3>
+            </div>
+
+            <form id="hasilForm" onsubmit="saveHasilPengujian(event)" class="space-y-4 text-xs">
+                
+                <!-- Nama Penguji -->
+                <div>
+                    <label class="block text-[#FFE0B2]/80 mb-1.5 font-medium">Nama Penguji</label>
+                    <input type="text" id="inputNamaPenguji" required placeholder="Masukkan nama penguji" class="w-full px-3.5 py-2.5 rounded-xl bg-[#FFF8EE]/5 border border-[#FFE0B2]/30 text-[#FFF8EE] focus:outline-none focus:border-[#FFE0B2]">
+                </div>
+
+                <!-- Hasil Pengujian Status (DROPDOWN) -->
+                <div>
+                    <label class="block text-[#FFE0B2]/80 mb-1.5 font-medium">Hasil Pengujian Status</label>
+                    <select id="inputStatusPengujian" required class="w-full px-3.5 py-2.5 rounded-xl bg-[#1a0f0b] border border-[#FFE0B2]/30 text-[#FFF8EE] focus:outline-none focus:border-[#FFE0B2] cursor-pointer">
+                        <option value="Berhasil" class="bg-[#1a0f0b] text-[#FFF8EE]">Berhasil</option>
+                        <option value="Gagal" class="bg-[#1a0f0b] text-[#FFF8EE]">Gagal</option>
+                    </select>
+                </div>
+
+                <!-- Catatan Pengujian -->
+                <div>
+                    <label class="block text-[#FFE0B2]/80 mb-1.5 font-medium">Catatan Pengujian</label>
+                    <textarea id="inputCatatan" rows="3" placeholder="Tuliskan catatan detail hasil pengujian..." class="w-full px-3.5 py-2.5 rounded-xl bg-[#FFF8EE]/5 border border-[#FFE0B2]/30 text-[#FFF8EE] focus:outline-none focus:border-[#FFE0B2] leading-relaxed"></textarea>
+                </div>
+
+                <!-- Tombol Aksi -->
+                <div class="pt-2 flex items-center justify-end space-x-3">
+                    <button type="button" onclick="closeInputModal()" class="px-4 py-2 rounded-xl bg-[#FFF8EE]/10 border border-[#FFE0B2]/20 text-[#FFF8EE] hover:bg-[#FFF8EE]/20 transition">Batal</button>
+                    <button type="submit" class="px-5 py-2 font-semibold rounded-xl bg-gradient-to-r from-[#D3A376] to-[#FFE0B2] text-[#3E2522] hover:brightness-110 transition">Simpan Hasil</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Fungsi untuk mengatur pilihan status pada tombol UI
+        function selectStatusOption(status) {
+            // 1. Simpan nilai status ke elemen hidden input
+            const statusInput = document.getElementById('inputStatusPengujian');
+            if (statusInput) {
+                statusInput.value = status;
+            }
+
+            const btnBerhasil = document.getElementById('btnStatusBerhasil');
+            const btnGagal = document.getElementById('btnStatusGagal');
+
+            if (!btnBerhasil || !btnGagal) return;
+
+            // Class style saat tombol AKTIF (Warna gradient krem ter-highlight)
+            const activeClass = "w-full px-3.5 py-2.5 rounded-xl border border-[#FFE0B2] bg-gradient-to-r from-[#D3A376] to-[#FFE0B2] text-[#3E2522] font-semibold transition-all text-center shadow-md focus:outline-none";
+            
+            // Class style saat tombol INAKTIF (Warna latar seragam dengan input biasa)
+            const inactiveClass = "w-full px-3.5 py-2.5 rounded-xl border border-[#FFE0B2]/30 bg-[#FFF8EE]/5 text-[#FFF8EE]/70 hover:text-[#FFF8EE] hover:border-[#FFE0B2]/50 font-medium transition-all text-center focus:outline-none";
+
+            // Set class sesuai status yang dipilih
+            if (status === 'Berhasil') {
+                btnBerhasil.className = activeClass;
+                btnGagal.className = inactiveClass;
+            } else {
+                btnBerhasil.className = inactiveClass;
+                btnGagal.className = activeClass;
+            }
+        }
+
+        // 1. Popup Modal Input Hasil
+        function openInputModal(siteTitle, currentTester, currentStatus, currentNotes) {
+            document.getElementById('inputModalSiteTitle').innerText = siteTitle;
+            document.getElementById('inputNamaPenguji').value = currentTester || '';
+            document.getElementById('inputCatatan').value = currentNotes || '';
+
+            // Logika Pemilihan Status:
+            // Jika status masih 'Belum Dicek', null, atau undefined, default-kan ke 'Berhasil'
+            let targetStatus = currentStatus;
+            if (!targetStatus || targetStatus === 'Belum Dicek') {
+                targetStatus = 'Berhasil';
+            }
+
+            // Panggil fungsi pembaruan UI & nilai input hidden
+            selectStatusOption(targetStatus);
+
+            // Tampilkan modal
+            document.getElementById('inputHasilModal').classList.remove('hidden');
+        }
+
+        function closeInputModal() {
+            document.getElementById('inputHasilModal').classList.add('hidden');
+        }
+
+        function saveHasilPengujian(e) {
+            e.preventDefault();
+            
+            // Mengambil nilai status terpilih dari hidden input
+            const statusTerpilih = document.getElementById('inputStatusPengujian').value;
+            const namaPenguji = document.getElementById('inputNamaPenguji').value;
+            const catatan = document.getElementById('inputCatatan').value;
+
+            console.log('Data yang disimpan:', {
+                penguji: namaPenguji,
+                status: statusTerpilih,
+                catatan: catatan
+            });
+
+            alert('Hasil pengujian berhasil disimpan!');
+            closeInputModal();
+        }
+
+        // 2. Helper Format Tanggal ke Bahasa Indonesia (contoh: "28 September 2026")
+        function formatTanggalIndo(dateString) {
+            if (!dateString) return '';
+            const parts = dateString.split('-');
+            if (parts.length !== 3) return dateString;
+            
+            const year = parts[0];
+            const month = parseInt(parts[1], 10);
+            const day = parseInt(parts[2], 10);
+
+            const namaBulan = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni", 
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+
+            return `${day} ${namaBulan[month - 1] || ''} ${year}`;
+        }
+
+        // 3. Filter Gabungan & Pengelompokan Data (Desktop & Mobile)
+        const statusFilter = document.getElementById('statusFilter');
+        const dateFilter = document.getElementById('dateFilter');
+        const searchInput = document.getElementById('searchInput');
+
+        function applyFilters() {
+            const selectedStatus = statusFilter ? statusFilter.value : 'Semua';
+            const selectedDate = dateFilter ? dateFilter.value : '';
+            const searchVal = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+            // Dapatkan semua grup bulan (Kontainer Bulan)
+            const monthGroups = document.querySelectorAll('.month-group');
+
+            monthGroups.forEach(group => {
+                let visibleInGroup = 0;
+
+                // A. FILTER & GROUPING TABEL DESKTOP
+                const rows = Array.from(group.querySelectorAll('.table-row'));
+                const dateMap = new Map();
+
+                rows.forEach(row => {
+                    const rowStatus = row.getAttribute('data-status');
+                    const rowDate = row.getAttribute('data-date');
+                    const rowText = row.innerText.toLowerCase();
+
+                    const matchStatus = (selectedStatus === 'Semua' || rowStatus === selectedStatus);
+                    const matchDate = (!selectedDate || rowDate === selectedDate);
+                    const matchSearch = (!searchVal || rowText.includes(searchVal));
+
+                    if (matchStatus && matchDate && matchSearch) {
+                        if (!dateMap.has(rowDate)) {
+                            dateMap.set(rowDate, []);
+                        }
+                        dateMap.get(rowDate).push(row);
+                        visibleInGroup++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                // Sisipkan Header Pemisah Tanggal di Tabel Desktop
+                const tbody = group.querySelector('tbody');
+                if (tbody) {
+                    // Hapus pemisah tanggal terdahulu agar tidak menumpuk
+                    tbody.querySelectorAll('.date-divider-row').forEach(el => el.remove());
+
+                    // Urutkan tanggal secara descending (terbaru di atas)
+                    const sortedDates = Array.from(dateMap.keys()).sort((a, b) => b.localeCompare(a));
+
+                    sortedDates.forEach(dateStr => {
+                        const dateRows = dateMap.get(dateStr);
+
+                        // Buat Baris Sub-Header Pemisah Tanggal
+                        const dividerTr = document.createElement('tr');
+                        dividerTr.className = 'date-divider-row bg-[#FFE0B2]/10 border-y border-[#FFE0B2]/20';
+                        dividerTr.innerHTML = `
+                            <td colspan="7" class="px-4 py-2 text-xs font-semibold text-[#FFE0B2] tracking-wide">
+                                <div class="flex items-center space-x-2">
+                                    <span class="w-2 h-2 rounded-full bg-[#FFE0B2]"></span>
+                                    <span>Tanggal Pengujian: ${formatTanggalIndo(dateStr)}</span>
+                                </div>
+                            </td>
+                        `;
+                        tbody.appendChild(dividerTr);
+
+                        // Tampilkan baris data tanggal ini
+                        dateRows.forEach(row => {
+                            row.style.display = '';
+                            tbody.appendChild(row);
+                        });
+                    });
+                }
+
+                // B. FILTER CARDS MOBILE
+                const mobileCards = group.querySelectorAll('.mobile-card');
+                mobileCards.forEach(card => {
+                    const cardStatus = card.getAttribute('data-status');
+                    const cardDate = card.getAttribute('data-date');
+                    const cardText = card.innerText.toLowerCase();
+
+                    const matchStatus = (selectedStatus === 'Semua' || cardStatus === selectedStatus);
+                    const matchDate = (!selectedDate || cardDate === selectedDate);
+                    const matchSearch = (!searchVal || cardText.includes(searchVal));
+
+                    if (matchStatus && matchDate && matchSearch) {
+                        card.style.display = 'block';
+                        visibleInGroup++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // C. SEMBUNYIKAN/TAMPILKAN BLOK BULAN BERDASARKAN ADA/TIDAKNYA DATA
+                if (visibleInGroup === 0) {
+                    group.style.display = 'none';
+                } else {
+                    group.style.display = 'block';
+                }
+            });
+        }
+
+        // Reset Semua Filter
+        function resetAllFilters() {
+            if (statusFilter) statusFilter.value = 'Semua';
+            if (dateFilter) dateFilter.value = '';
+            if (searchInput) searchInput.value = '';
+            applyFilters();
+        }
+
+        // Event Listener saat Input Berubah
+        if (statusFilter) statusFilter.addEventListener('change', applyFilters);
+        if (dateFilter) dateFilter.addEventListener('change', applyFilters);
+        if (searchInput) searchInput.addEventListener('input', applyFilters);
+
+        // 4. Inisialisasi Tanggal Hari Ini saat Pertama Dimuat (Login)
+        document.addEventListener('DOMContentLoaded', () => {
+            if (dateFilter) {
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const day = String(today.getDate()).padStart(2, '0');
+                
+                // Set default input tanggal ke hari ini (YYYY-MM-DD)
+                dateFilter.value = `${year}-${month}-${day}`;
+            }
+            
+            // Jalankan filter pertama kali
+            applyFilters();
+        });
+
+        // 5. Salin Link Clipboard
+        function copyToClipboard(urlText, btnElement) {
+            navigator.clipboard.writeText(urlText).then(() => {
+                const toast = document.getElementById('copyToast');
+                if (toast) {
+                    toast.classList.remove('hidden');
+                    setTimeout(() => toast.classList.add('hidden'), 2000);
+                }
+            });
+        }
+
+        // 6. Dropdown User
+        const userMenuBtn = document.getElementById('userMenuBtn');
+        const userDropdown = document.getElementById('userDropdown');
+        if (userMenuBtn && userDropdown) {
+            userMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                userDropdown.classList.toggle('hidden');
+            });
+            window.addEventListener('click', () => userDropdown.classList.add('hidden'));
+        }
+    </script>
+
+</body>
+</html>
